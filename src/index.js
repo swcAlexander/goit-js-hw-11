@@ -63,19 +63,11 @@ async function onLoadMore() {
     loadMoreBtn.disable();
     const result = await newsApiService.fetchGallery();
     const markup = markupGallery(result.hits);
-    if (result.hits.length < result.totalHits) {
-      Notiflix.Notify.success(
-        `Hooray! We found ${result.totalHits} images !!!`
-      );
-      loadMoreBtn.show();
-    }
     if (result.hits.length >= result.totalHits) {
-      Notiflix.Notify.success(
-        `Hooray! We found ${result.totalHits} images !!!`
-      );
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
+      loadMoreBtn.hide();
       return;
     }
     updateMarkup(markup);
