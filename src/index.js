@@ -63,11 +63,7 @@ async function onLoadMore() {
     loadMoreBtn.disable();
     const result = await newsApiService.fetchGallery();
     const markup = markupGallery(result.hits);
-    if (
-      result.hits.length >= result.totalHits ||
-      result.hits.length === 0 ||
-      result.hits.length < 40
-    ) {
+    if (result.hits.length === 0) {
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
@@ -76,6 +72,13 @@ async function onLoadMore() {
     }
     updateMarkup(markup);
     loadMoreBtn.enable();
+    if (result.hits.length < 40 || result.hits.length >= result.totalHits) {
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+      loadMoreBtn.hide();
+      return;
+    }
   } catch (error) {
     console.log(error);
   }
