@@ -39,7 +39,7 @@ async function onSubmit(e) {
         Notiflix.Notify.success(
           `Hooray! We found ${result.totalHits} images !!!`
         );
-        refs.loadMoreEl.classList.remove('is-hidden');
+        loadMoreBtn.show();
       }
       if (result.hits.length >= result.totalHits) {
         Notiflix.Notify.success(
@@ -63,6 +63,21 @@ async function onLoadMore() {
     loadMoreBtn.disable();
     const result = await newsApiService.fetchGallery();
     const markup = markupGallery(result.hits);
+    if (result.hits.length < result.totalHits) {
+      Notiflix.Notify.success(
+        `Hooray! We found ${result.totalHits} images !!!`
+      );
+      loadMoreBtn.show();
+    }
+    if (result.hits.length >= result.totalHits) {
+      Notiflix.Notify.success(
+        `Hooray! We found ${result.totalHits} images !!!`
+      );
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+      return;
+    }
     updateMarkup(markup);
     loadMoreBtn.enable();
   } catch (error) {
