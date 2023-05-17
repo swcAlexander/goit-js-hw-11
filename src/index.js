@@ -70,6 +70,13 @@ async function onLoadMore() {
       loadMoreBtn.hide();
       return;
     }
+    if (result.hits === []) {
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+      loadMoreBtn.hide();
+      return;
+    }
     updateMarkup(markup);
     loadMoreBtn.enable();
   } catch (error) {
