@@ -63,14 +63,7 @@ async function onLoadMore() {
     loadMoreBtn.disable();
     const result = await newsApiService.fetchGallery();
     const markup = markupGallery(result.hits);
-    if (result.hits.length >= result.totalHits) {
-      Notiflix.Notify.info(
-        "We're sorry, but you've reached the end of search results."
-      );
-      loadMoreBtn.hide();
-      return;
-    }
-    if (result.hits === []) {
+    if (result.hits.length >= result.totalHits || result.hits.length === 0) {
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
