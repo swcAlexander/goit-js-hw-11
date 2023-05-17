@@ -24,7 +24,6 @@ async function onSubmit(e) {
     );
     return;
   }
-  currentQuery = newsApiService.query;
   try {
     const result = await newsApiService.fetchGallery();
 
